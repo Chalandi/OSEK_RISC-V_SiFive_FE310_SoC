@@ -1,0 +1,59 @@
+/*********************************************************************
+*                 (c) SEGGER Microcontroller GmbH                    *
+*                      The Embedded Experts                          *
+*                         www.segger.com                             *
+**********************************************************************
+
+File          : RedV.jdebug
+Created       : 8 Sep 2022 20:06
+Ozone Version : V3.26h
+*/
+
+__constant unsigned int __FE310_BootRom_StartAddress = 0x00001004;
+
+/*********************************************************************
+*
+*       OnProjectLoad
+*
+* Function description
+*   Project load routine. Required.
+*
+**********************************************************************
+*/
+void OnProjectLoad (void) {
+  
+  Project.SetDevice ("FE310");
+  Project.SetTargetIF ("JTAG");
+  Project.SetTIFSpeed ("4 MHz");
+  Project.AddSvdFile ("$(InstallDir)/Config/CPU/RV32I.svd");
+  Project.AddSvdFile ("./e310x.svd");
+  File.Open("./Output/Blinky_RedV_FE310.elf");
+}
+
+/*********************************************************************
+*
+* AfterTargetReset
+*
+* Function description
+* Initialize the PC with the BootRom start address
+*
+**********************************************************************
+*/
+void AfterTargetReset(void)
+{
+  Target.SetReg("PC", __FE310_BootRom_StartAddress);
+}
+
+/*********************************************************************
+*
+* AfterTargetDownload
+*
+* Function description
+* Initialize the PC with the BootRom start address
+*
+**********************************************************************
+*/
+void AfterTargetDownload (void)
+{
+  Target.SetReg("PC", __FE310_BootRom_StartAddress);
+}
