@@ -15,6 +15,11 @@
 // 
 // ******************************************************************************************************
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wvariadic-macros"
+#endif
+
 #include"OsTcb.h"
 
 /***************************************************/
@@ -33,3 +38,5 @@
 #include"OsGenCfg.h"
 #undef OS_GEN_OCB
 
+#if defined(__GNUC__)
+#endif

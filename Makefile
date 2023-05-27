@@ -47,7 +47,7 @@ OPT_MODIFIED_O2 = -O2                               \
 
 NO_OPT = -O0
 
-OPT = $(NO_OPT)
+OPT = $(OPT_MODIFIED_O2)
 
 ############################################################################################
 # GCC Compiler verbose flags
@@ -59,7 +59,20 @@ VERBOSE_GCC = -frecord-gcc-switches -fverbose-asm
 # Target's Compiler flags
 ############################################################################################
 
-ARCH = -mcpu=sifive-e31 -mabi=ilp32 -msmall-data-limit=0 -falign-functions=4
+ARCH = -mcpu=sifive-e31                               \
+       -mabi=ilp32                                    \
+       -msmall-data-limit=0                           \
+       -falign-functions=4
+
+############################################################################################
+# Target's Compiler warning flags
+############################################################################################
+
+WFLAGS = -Wall                                       \
+         -Wextra                                     \
+         -Wpedantic                                  \
+         -Wconversion                                \
+         -Wsign-conversion
 
 ############################################################################################
 # C Compiler flags
@@ -67,6 +80,7 @@ ARCH = -mcpu=sifive-e31 -mabi=ilp32 -msmall-data-limit=0 -falign-functions=4
 
 COPS  = $(OPT)                                        \
         $(ARCH)                                       \
+        $(WFLAGS)                                     \
         -ffast-math                                   \
         -Wa,-adhln=$(OBJ_DIR)/$(basename $(@F)).lst   \
         -g3                                           \
@@ -84,6 +98,7 @@ COPS  = $(OPT)                                        \
 
 CPPOPS  = $(OPT)                                        \
           $(ARCH)                                       \
+          $(WFLAGS)                                     \
           -ffast-math                                   \
           -Wa,-adhln=$(OBJ_DIR)/$(basename $(@F)).lst   \
           -g3                                           \
@@ -128,6 +143,7 @@ ASOPS = $(OPT)                                        \
         -ftemplate-depth=128                          \
         -Wzero-as-null-pointer-constant
 endif
+
 ############################################################################################
 # Linker flags
 ############################################################################################
