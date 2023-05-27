@@ -1,0 +1,25 @@
+﻿name: OSEK_RISC-V_SiFive_FE310_SoC
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+jobs:
+  target-gcc-riscv64-unknown-elf:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+      - name: update-tools
+        run: |
+          wget --no-check-certificate https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
+          tar -xvzf riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
+      - name: target-riscv64-unknown-elf
+        run: |
+          PATH=./riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin:$PATH
+          bash ./Rebuild.sh
+          ls -la ./Output/Blinky_RedV_FE310.hex
