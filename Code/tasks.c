@@ -75,7 +75,7 @@ TASK(Idle)
     }
     else
     {
-      OS_TerminateTask(); /* In case of error we switch off the task */
+      OS_TerminateTask(); // In case of error we switch off the task
     }
   }
 }
