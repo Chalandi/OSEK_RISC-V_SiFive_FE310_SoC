@@ -17,33 +17,29 @@
 
 #include "OsGenMac.h"
 
-
 //=============================================================================
 // OS Configuration
 //=============================================================================
 
 OS_CONFIG_BEGIN
 
-    OS_TASK_BEGIN
-      OS_TASK_DEF(T1, 1, 1024, 1, OS_AUTOSTART, EXTENDED, FULL_PREEMPT)
-      OS_TASK_DEF(T2, 5, 1024, 1, OS_AUTOSTART, EXTENDED, FULL_PREEMPT)
-    OS_TASK_END
-    
-    OS_EVENT_BEGIN
-      OS_EVENT_DEF(EVT_BLINK_BLUE_LED_FAST, (1UL << 0))
-      OS_EVENT_DEF(EVT_BLINK_BLUE_LED_SLOW, (1UL << 1))
-    OS_EVENT_END
-    
-    OS_ALARM_BEGIN
-      OS_ALARM_DEF(ALARM_BLINK_BLUE_LED_FAST, ALARM_SET_EVENT, EVT_BLINK_BLUE_LED_FAST, T1, 0)
-      OS_ALARM_DEF(ALARM_BLINK_BLUE_LED_SLOW, ALARM_SET_EVENT, EVT_BLINK_BLUE_LED_SLOW, T2, 0)
-    OS_ALARM_END
-    
-    OS_RESOURCE_BEGIN
-      OS_RESOURCE_DEF(RES_SCHEDULER, RES_SCHEDULER_PRIO, { 1,1 })
-    OS_RESOURCE_END
+  OS_TASK_BEGIN
+    OS_TASK_DEF(Idle, 1, 1024, 1, OS_AUTOSTART, EXTENDED, FULL_PREEMPT)
+    OS_TASK_DEF(T1, 4, 1024, 1, OS_AUTOSTART, EXTENDED, FULL_PREEMPT)
+  OS_TASK_END
 
-  
+  OS_EVENT_BEGIN
+    OS_EVENT_DEF(EVT_BLINK_BLUE_LED, (1UL << 0))
+  OS_EVENT_END
+
+  OS_ALARM_BEGIN
+    OS_ALARM_DEF(ALARM_BLUE_LED, ALARM_SET_EVENT, EVT_BLINK_BLUE_LED, T1, 0)
+  OS_ALARM_END
+
+  OS_RESOURCE_BEGIN
+    OS_RESOURCE_DEF(RES_SCHEDULER, RES_SCHEDULER_PRIO, { 1,1 })
+  OS_RESOURCE_END
+
   //=============================================================================
   //  EI Interrupts Configuration
   //=============================================================================
