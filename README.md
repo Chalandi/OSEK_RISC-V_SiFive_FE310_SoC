@@ -3,7 +3,7 @@ OSEK_RISC-V_SiFive_FE310_SoC
 
 <p align="center">
     <a href="https://github.com/chalandi/OSEK_RISC-V_SiFive_FE310_SoC/actions">
-        <img src="https://github.com/chalandi/OSEK_RISC-V_SiFive_FE310_SoC/actions/workflows/OSEK.yml/badge.svg" alt="Build Status"></a>
+        <img src="https://github.com/chalandi/OSEK_RISC-V_SiFive_FE310_SoC/actions/workflows/OSEK_RISC-V_SiFive_FE310_SoC.yml/badge.svg" alt="Build Status"></a>
     <a href="https://github.com/chalandi/OSEK_RISC-V_SiFive_FE310_SoC/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
         <img src="https://custom-icon-badges.herokuapp.com/github/issues-raw/chalandi/OSEK_RISC-V_SiFive_FE310_SoC?logo=github" alt="Issues" /></a>
     <a href="https://github.com/chalandi/OSEK_RISC-V_SiFive_FE310_SoC">
