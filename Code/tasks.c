@@ -2,30 +2,17 @@
 /*******************************************************************************************************************
 ** Includes
 *******************************************************************************************************************/
-#include"OsTcb.h"
-#include"OsAPIs.h"
+#include "OsTcb.h"
+#include "OsAPIs.h"
 #include "FE310.h"
 #include "riscv-csr.h"
 
-#define TOGGLE_BLUE_LED()\
-{\
-  OS_DisableAllInterrupts();\
-  csr_clr_bits_mip((uint32)-1);\
-  GPIO0->output_val.bit.pin5 ^= 1;\
-  OS_EnableAllInterrupts();\
-}
-
-#define TURN_ON_LED_BLUE()\
-{\
-  OS_DisableAllInterrupts();\
-  csr_clr_bits_mip((uint32)-1);\
-  GPIO0->output_val.bit.pin5 = 1;\
-  OS_EnableAllInterrupts();\
-}
+static inline BLUE_LED_ON    (void) { GPIO0->output_val.bit.pin5  = 1; }
+static inline BLUE_LED_TOGGLE(void) { GPIO0->output_val.bit.pin5 ^= 1; }
 
 TASK(T1)
 {
-  TURN_ON_LED_BLUE();
+  BLUE_LED_ON();
 
   const OsEventMaskType OsWaitEventMask = (OsEventMaskType) EVT_BLINK_LED;
 
@@ -42,7 +29,8 @@ TASK(T1)
       if((Events & EVT_BLINK_LED) == EVT_BLINK_LED)
       {
         OS_ClearEvent(EVT_BLINK_LED);
-        TOGGLE_BLUE_LED();
+
+        BLUE_LED_TOGGLE();
       }
     }
     else
