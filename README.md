@@ -43,9 +43,9 @@ providing a simple blinky LED show featuring the blue
 LED toggling at 1/2 Hz (blue). These straightforward sample
 tasks can be found in [tasks.c](./Code/tasks.c).
 
-## Compiler
+## Toolchain
 
-The compiler used to build this project is `riscv64-unknown-elf` you can downloaded from:
+The toolchain used to build this project is `riscv64-unknown-elf` you can download it using this link:
  https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
 
 ## Building the Application
