@@ -46,7 +46,10 @@ tasks can be found in [tasks.c](./Code/tasks.c).
 ## Toolchain
 
 The toolchain used to build this project is `riscv64-unknown-elf` you can download it using this link:
+
  https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
+
+ https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-w64-mingw32.zip
 
 ## Building the Application
 
