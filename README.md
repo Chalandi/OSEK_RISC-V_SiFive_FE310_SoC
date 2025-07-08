@@ -43,11 +43,16 @@ providing a simple blinky LED show featuring the blue
 LED toggling at 1/2 Hz (blue). These straightforward sample
 tasks can be found in [tasks.c](./Code/tasks.c).
 
+## Compiler
+
+The compiler used to build this project is `riscv64-unknown-elf` you can downloaded from:
+ https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
+
 ## Building the Application
 
 ### Build with GNUmake on `*nix`
 
-Build on `*nix*` is easy using an installed `gcc-arm-none-eabi`
+Build on `*nix*` is easy using an installed `riscv64-unknown-elf`
 
 ```sh
 cd OSEK_RISC-V_SiFive_FE310_SoC
