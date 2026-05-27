@@ -116,9 +116,6 @@ OsStatusType OS_Schedule(void)
     /* Get the high prio task id */
     OCB_Cfg.HighPrioReadyTaskIdx = OsGetHighPrioReadyTaskIdx((uint32)OsHwSearchForHighPrio());
 
-    /* Exit the critical section */
-    OS_ResumeAllInterrupts();
-
 
     /* case1: the scheduler is called explicitly by the running task or by an interrupt cat 2 and a ready task is found */
     if(OCB_Cfg.CurrentTaskIdx < OS_INTERNAL_TASK_ID && OCB_Cfg.HighPrioReadyTaskIdx < OS_INTERNAL_TASK_ID)
@@ -141,24 +138,32 @@ OsStatusType OS_Schedule(void)
 
             if(OCB_Cfg.OsCat2InterruptLevel == OS_FALSE && OCB_Cfg.OsLockDispatcher == OS_FALSE)
             {
+              /* Exit the critical section */
+              OS_ResumeAllInterrupts();
               /* Call the dispatcher */
               osDispatch();
               return(E_OK);
             }
             else if(OCB_Cfg.OsLockDispatcher == OS_TRUE)
             {
+              /* Exit the critical section */
+              OS_ResumeAllInterrupts();
               return(E_OK);
             }
             else
             {
               /*  Scheduler is called in interrupt cat 2 context, the Dispatcher will be executed later after the ISR */
               OCB_Cfg.OsIntCallDispatcher = OS_TRUE;
+              /* Exit the critical section */
+              OS_ResumeAllInterrupts();
               return(E_OK);
             }
           }
           else
           {
             /* Current task is a non-preemptable task */
+            /* Exit the critical section */
+            OS_ResumeAllInterrupts();
             return(E_OK);
           }
         }
@@ -169,12 +174,17 @@ OsStatusType OS_Schedule(void)
           osPostTaskHook();
           #endif
 
+          /* Exit the critical section */
+          OS_ResumeAllInterrupts();
+
           /* Call the dispatcher */
           osDispatch();
           return(E_OK);
         }
         else
         {
+          /* Exit the critical section */
+          OS_ResumeAllInterrupts();
           /* nothing to do */
           return(E_OK);
         }
@@ -186,10 +196,14 @@ OsStatusType OS_Schedule(void)
       {
         /* call the dispatcher after the execution of ISR cat2 */
         OCB_Cfg.OsIntCallDispatcher = OS_TRUE;
+        /* Exit the critical section */
+        OS_ResumeAllInterrupts();
         return(E_OK);
       }
       else
       {
+        /* Exit the critical section */
+        OS_ResumeAllInterrupts();
         /* The scheduler is called during the OS startup, Dispatcher will be called at the end of the startup procedure */
         return(E_OK);
       }
@@ -200,6 +214,8 @@ OsStatusType OS_Schedule(void)
       /* check the current task state */
       if(OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->TaskStatus == RUNNING)
       {
+        /* Exit the critical section */
+        OS_ResumeAllInterrupts();
         /* no context switch is needed */
         return(E_OK);
       }
@@ -214,6 +230,8 @@ OsStatusType OS_Schedule(void)
 
         if(OCB_Cfg.OsCat2InterruptLevel == OS_FALSE)
         {
+          /* Exit the critical section */
+          OS_ResumeAllInterrupts();
           /* The scheduler is called outside an interrupt context */
           osDispatch();
           return(E_OK);
@@ -222,6 +240,8 @@ OsStatusType OS_Schedule(void)
         {
           /* call the dispatcher after the execution of ISR cat2 */
           OCB_Cfg.OsIntCallDispatcher = OS_TRUE;
+          /* Exit the critical section */
+          OS_ResumeAllInterrupts();
           return(E_OK);
         }
       }
@@ -229,6 +249,8 @@ OsStatusType OS_Schedule(void)
    /* case 4: System idle loop is active and the scheduler is called explicitly from an interrupt cat 2 and no ready task is found */
     else if(OCB_Cfg.CurrentTaskIdx == OS_INTERNAL_TASK_ID && OCB_Cfg.HighPrioReadyTaskIdx == OS_INTERNAL_TASK_ID)
     {
+      /* Exit the critical section */
+      OS_ResumeAllInterrupts();
       /* no context switch is needed */
       return(E_OK);
     }
